@@ -4,6 +4,7 @@
  * Created: 23.05.2018 15:12:54
  * Author : Bastian Reul
  ToDo:
+	0: Das Projekt auf GitHub hochladen
 	1: Externe Bestellung integrieren
 	2: Bildschirmausgaben korrigieren
 	3: Wippe includieren
