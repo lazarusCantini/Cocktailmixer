@@ -9,6 +9,9 @@
 #include <stdlib.h>
 #define ObereBeschraenkung 240
 #define UntereBeschraenkung 15
+#define K 0.6
+#define Abweichung_Max 4 
+#define offset 18 //Dieser Offset ist dafür da, um den Spannungseinruch beim bewegen der Motoren zu kompensieren
 
 
 uint8_t Regler(uint8_t abweichung, uint8_t Iteration)
@@ -25,79 +28,33 @@ uint8_t Regler(uint8_t abweichung, uint8_t Iteration)
 __attribute__((optimize(0)))
 void verfahre_Fader_auf_Wert(int *zeiger_auf_soll_array, PwmPin *Motor_Fader_Enable, AnalogDigitalConverter *FaderADC, Fader_Motor *Motor_Fader)
 {
-	
-	/* alter code Anfang 
-	volatile bool Drehsinn = Motor_Fader->get_Drehsinn();
-	volatile uint8_t ist = FaderADC->getValue();
-	volatile uint8_t abweichung;
-	volatile uint8_t IterationsAnteil = 0;
-	volatile bool verfahren_ist_fertig = false;
-	Motor_Fader->Enable_Motor();
-	while(!verfahren_ist_fertig)
-	{
-		ist = FaderADC->getValue();
-		//Debug_ADC_Wert_ausgeben(ist);
-		IterationsAnteil = IterationsAnteil +1;
-		if (ist < soll )
-		{
-			abweichung = soll - ist;
-			Motor_Fader->setze_Drehrichtung(true);
-		}
-		if (ist > soll )
-		{
-			abweichung = ist - soll;
-			Motor_Fader->setze_Drehrichtung(false);
-		}
-		if (Drehsinn == Motor_Fader->get_Drehsinn())
-		{
-			
-		}
-		else
-		{
-			aktualisiere_alle_Gliederwerte();
-			Schubverband.Setze_Ist_auf_Soll();
-			Schubverband.Aktualisiere_Alle_Register();
-			Schubverband.Aktualisiere_ist_gleich_Soll(true);
-			Drehsinn = Motor_Fader->get_Drehsinn();
-		}
-		
-		if (ist == soll)
-		{
-			Motor_Fader->Disable_Motor();
-			verfahren_ist_fertig = true;
-			//Debug_Halt_wurde_erreicht();
-		}
-		else
-		{
-			if ((abweichung + IterationsAnteil)>100)
-			{
-				Motor_Fader_Enable->set_Dutycycle(double(80));
-				IterationsAnteil = 0;
-			}
-			else
-			{
-				Motor_Fader_Enable->set_Dutycycle(double(Regler(abweichung, IterationsAnteil)));
-			}
-		}
-	} Alter Code ende */
-	
 		volatile uint8_t ist_array[6];
 		volatile uint8_t abweichung_array[6] = {0,0,0,0,0,0};
 		volatile bool Fader_Halt_erreicht[6] = {false, false, false, false, false, false};
 		volatile int i = 0;
 		int Richtungsinitialisierung = 0;
 		double iterativer_PWM_Wert = 0.0;
+		volatile char *Debug_Buchstabe;
 		while (!(Fader_Halt_erreicht[0] && Fader_Halt_erreicht[1] && Fader_Halt_erreicht[2] && Fader_Halt_erreicht[3] && Fader_Halt_erreicht[4] && Fader_Halt_erreicht[5]) )
 		{
+
 			for (; i<6; i++)
 			{
 				iterativer_PWM_Wert = 0.0;
 				while(!Fader_Halt_erreicht[i])
 				{
 					Motor_Fader_Array[i].Disable_Motor();
-					ist_array[i] = FaderADC_Array[i].getValue();
+					if (zeiger_auf_soll_array[i] <= 50) //Die Nuller (die eigentlich wegen der Normalisierung auf mll nicht 0 sind müssen beim Offset ausgeschlossen werden
+					{
+						ist_array[i] = FaderADC_Array[i].getValue();
+					} 
+					else
+					{
+						ist_array[i] = FaderADC_Array[i].getValue() + offset;
+					}
+					
 					Motor_Fader_Array[i].Enable_Motor();
-					if (ist_array[i] < zeiger_auf_soll_array[i] )
+					if (ist_array[i] <= zeiger_auf_soll_array[i] )
 					{
 						//Motor_Fader_Array[i].Enable_Motor();
 						abweichung_array[i] = zeiger_auf_soll_array[i] - ist_array[i];
@@ -132,45 +89,50 @@ void verfahre_Fader_auf_Wert(int *zeiger_auf_soll_array, PwmPin *Motor_Fader_Ena
 					}
 					Richtungsinitialisierung++;
 					Motor_Fader_Array[i].Enable_Motor();
-					//if (ist_array[i] == soll)
-				if (abweichung_array[i] <= 15)
+
+			
+				if (abweichung_array[i] <= 1)
 				{
-					if (abweichung_array[i] <= 15)
-					{
 						Motor_Fader_Array[i].Disable_Motor();
 						Fader_Halt_erreicht[i] = true;
-					}
-					else
-					{
-						while (Fader_Halt_erreicht[i] == false)
-						{
-							iterativer_PWM_Wert = iterativer_PWM_Wert + 1.0;
-							Motor_Fader_Enable_Array[i].set_Dutycycle(iterativer_PWM_Wert);
-							if (abs(zeiger_auf_soll_array[i] - FaderADC_Array[i].getValue()) <= 1)
-							{
-								Motor_Fader_Array[i].Disable_Motor();
-								Fader_Halt_erreicht[i] = true;	
-							}
-						}
-
-					}
-
-					//Debug_Halt_wurde_erreicht();
-					//weitermachen = false;
+						//Send_UART("Motor #:  ausgeschaltet\n");
 				}
 				else
 				{
-					Motor_Fader_Enable_Array[i].set_Dutycycle(double(abweichung_array[i]));
-				}
+					if (abweichung_array[i] <= 30)
+					{
+						if (Motor_Fader_Enable_Array[i].get_Dutycycle() != 15.0)
+						{
+							Motor_Fader_Enable_Array[i].set_Dutycycle(15.0);
+						}
+						
+					} 
+					else
+					{
+						Motor_Fader_Enable_Array[i].set_Dutycycle(double(abweichung_array[i])/1.5);  //Original_ 2.35 // eigen 2.15
+					}
+					
 				}
 				//Nochmal schauen ob sich ein ehemals korrekt positionierter Fader wieder verfahren hat
-		/*		if (i==5)
+				//Muss noch an die Offset geschichte angepasst werden
+			/*	if (i==5 && Fader_Halt_erreicht[5])
 				{
 					for (volatile int j=0; j<6; j++)
 					{
+						Send_UART("Kontrollrunde\n");
 						//if (soll == FaderADC_Array[j].getValue())
 						ist_array[j] = FaderADC_Array[j].getValue();
-						if ( ( ist_array[j]- soll) < 20)
+						//Der Betrag der Abweichung wird gebildet (könnte man auch über abs machen, soll aber zeigen wie man es auch machen kann
+						if (ist_array[j] <= zeiger_auf_soll_array[j] )
+						{
+							abweichung_array[j] = zeiger_auf_soll_array[j] - ist_array[j];
+						}
+						else
+						{
+							abweichung_array[j] = ist_array[j] - zeiger_auf_soll_array[j];
+						}
+						//Betrag wurde berechnet und in aweichungs_array gespeichert
+						if ( abweichung_array[j] <= Abweichung_Max)
 						{
 							Fader_Halt_erreicht[j] = true;
 						}
@@ -180,10 +142,14 @@ void verfahre_Fader_auf_Wert(int *zeiger_auf_soll_array, PwmPin *Motor_Fader_Ena
 							i=-1;
 						}
 					}
-				}*/
+				}
+				*/
 			}
+			
 		}
+	}
 }
+				
 __attribute__((optimize(0)))
 void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 {
@@ -290,7 +256,7 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 				{
 					//if (soll == FaderADC_Array[j].getValue())
 					ist_array[j] = FaderADC_Array[j].getValue();
-					if ( ( ist_array[j]- soll) < 20)
+					if ( ( ist_array[j]- soll) < 2)
 					{
 						Fader_Halt_erreicht[j] = true;
 					} 

@@ -20,11 +20,11 @@ main.d main.o: .././main.cpp \
  .././PwmPin.h .././Schieberegister.h .././IC_74HC595.h \
  .././Fader_Motor.h .././AnalogDigitalConverter.h .././Pumpenklasse.h \
  .././Pumpensteuerung.h .././Schieberegister_Operationen.h .././LED.h \
- .././Faderbewegung.h .././StringOperationen.h \
+ .././Faderbewegung.h .././UART.h .././StringOperationen.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
- .././BringMe2IdleState.h .././Potentiometer.h .././UART.h \
+ .././BringMe2IdleState.h .././Potentiometer.h \
  .././uart_string_handling.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
@@ -87,6 +87,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 .././Faderbewegung.h:
 
+.././UART.h:
+
 .././StringOperationen.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
@@ -98,7 +100,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 .././BringMe2IdleState.h:
 
 .././Potentiometer.h:
-
-.././UART.h:
 
 .././uart_string_handling.h:

@@ -128,11 +128,18 @@
 	volatile char global_uart_string[UART_MAXSTRLEN + 1] = "";
 	int uart_getraenke_wert[6];
 	bool automodus = false;
+	volatile uint8_t count_plus = 0;
+	volatile uint8_t count_hash = 0;
 	//Variablen für UART Kommunikation
 	char *Letzter_Status;
 	int *Prozentmengen;
+	
+	bool remote_rezept = false;
 		
-		
+	int intRezepte[] = { 0, 0, 0, 0, 0, 0};
+	int ArrayCounter = 0;
+	char IntString[] = {'0', '0', '0'};
+	
 	/*
 void PWM_Messung(int Durchlaeufe)
 {
@@ -286,9 +293,32 @@ void Initialisierung (void)
 }
 
 
+void SchalteKranzAus()
+{
+	for (int i=0; i<6; i++)
+	{
+		LEDKranz[i].schalte_aus();
+	}
+	aktualisiere_alle_Gliederwerte();
+	Schubverband.Setze_Ist_auf_Soll();
+	Schubverband.Aktualisiere_Alle_Register();
+	Schubverband.Aktualisiere_ist_gleich_Soll(true);
+}
+
+void SchalteLEDAnKranzEin(uint8_t nummer)
+{
+	LEDKranz[nummer].schalte_ein();
+	aktualisiere_alle_Gliederwerte();
+	Schubverband.Setze_Ist_auf_Soll();
+	Schubverband.Aktualisiere_Alle_Register();
+	Schubverband.Aktualisiere_ist_gleich_Soll(true);
+}
+
 //__attribute__((optimize(0)))
 int main(void)
 {
+	int LED_Kranz_Zaehler = 0;
+	uint8_t LED_aktuell = 0 ;
 	ProgrammablaufStatus = Sprungmarke_Start;
 	while (true)
 	{
@@ -318,6 +348,8 @@ int main(void)
 			Send_UART(Letzter_Status);
 			release_global_uart_string();
 			FlagFaderRemote = false;
+
+			
 		}
 		
 		//Das ist die Warteschleife in der der Getränkemixer bereit ist, dass durch den druck auf Start ein Gesammtvorgang gestartet werden kann
@@ -325,13 +357,25 @@ int main(void)
 		if (ProgrammablaufStatus == Sprungmarke_IdleState)
 		{
 			//Led Kranz rotieren lassen
+			LED_Kranz_Zaehler++;
+			if (LED_Kranz_Zaehler % 30000 == 0)
+				{
+					SchalteLEDAnKranzEin(LED_aktuell);
+					LED_aktuell++;
+				}
+			if (LED_aktuell == 6)
+				{
+					LED_aktuell = 0;
+					SchalteKranzAus();
+					LED_Kranz_Zaehler = 0;
+				}
+
 			
 			//Falls ein UART Befehl vom Raspberry gekommen sein sollte
-			if (global_uart_str_complete == 1)
+			if (remote_rezept)
 			{
 				//####0:1:070;0:2:010;0:3:000;0:4:010;0:5:000;0:6:010;++++  Beispielstring für eine Rezeptanforderung
-				if ((global_uart_string[4] == '0') && (global_uart_string[6] == '1')) // vermutlich ein Rezeptauftrag
-				{
+
 					Prozentmengen = Rezeptur_berechnen();
 					int gesammt_Prozent = 0;
 					for (int i=0; i<6; i++)
@@ -345,13 +389,13 @@ int main(void)
 								// Send_UART("Prozentmenge 1: ");
 								// Send_UART(int_to_char_array(Prozentmengen[0]));
 						FlagFaderRemote = true;
+						remote_rezept = false;
 					}
 					else
 					{
 						Send_UART("Data Invalid");
 					}
 					release_global_uart_string();
-				}
 			} 
 
 		}
@@ -361,10 +405,13 @@ int main(void)
 		{
 				if (FlagFaderRemote)
 				{//Es wurde eine Rezeptur über den Raspberry eingegeben
-					//Routinen eingeben um die externe Rezeptur einzugeben
+					//Routinen eingeben um die externe Rezeptur einzugeben Rezept_Array[t]
+
 					normiere_Array_auf_Fader_Wert(Prozentmengen);
 					verfahre_Fader_auf_Wert(Prozentmengen, &Motor_Fader_Enable_Array[0],&FaderADC_Array[0], &Motor_Fader_Array[0]);
+
 					FlagFaderRemote = false;
+					remote_rezept = false;
 					ProgrammablaufStatus = Sprungmarke_Fader_einlesen;
 				/*	Kein_Offset_Abgleich_noetig = true;
 					for (int i=0; i<6; i++)
@@ -377,7 +424,7 @@ int main(void)
 				{//Es wird das Getraänk am Cocktailmixer selbst rezeptuiert
 					//LCD Ausgabe dass die aktuelle Fuellmenge beachtet werden soll
 					Max_Fuellmaenge_beachten(100);
-				//	_delay_ms(2000);
+					_delay_ms(4000);
 					ProgrammablaufStatus = Sprungmarke_Fader_einlesen;
 				}
 		}
@@ -395,7 +442,7 @@ int main(void)
 		
 		if (ProgrammablaufStatus == Sprungmarke_Rezept_ausgeben)
 		{
-			Debug_Rezept_wird_ausgegeben();
+			//Debug_Rezept_wird_ausgegeben();
 			//_delay_ms(2000);
 			Rezeptur_ausgeben(Pumpenarray);
 			ProgrammablaufStatus = Sprungmarke_Bring_me_to_Idle_State;
@@ -451,7 +498,7 @@ ISR(PORTA_INT0_vect) //Startknopf Interrupt
 	if (!(StartTasterIgnorieren)) //Zum entprellen der Starttase. Wird auf False gesetzt in BringmeToIdleState
 	{
 		StartTasterIgnorieren = true;
-		Debug_Start_gedrueckt();
+		//Debug_Start_gedrueckt();
 	/*Motor_Fader_1_Enable.set_PWM_status(true);
 	Motor_Fader_2_Enable.set_PWM_status(true);
 	Motor_Fader_3_Enable.set_PWM_status(true);
@@ -461,7 +508,7 @@ ISR(PORTA_INT0_vect) //Startknopf Interrupt
 	Debug_PWM_aktiviert();
 	
 	weitermachen = true;*/
-	_delay_ms(800);
+	_delay_ms(400);
 	//weitermachen = true;
 	//Motor_Fader_Array[0].Enable_Motor();
 	//counter = counter + 1;
@@ -508,7 +555,7 @@ ISR(PORTA_INT0_vect) //Startknopf Interrupt
 ISR(PORTA_INT1_vect) //Stopknopf Interrupt
 {
 	cli();
-	Debug_Stop_gedrueckt();
+	//Debug_Stop_gedrueckt();
 /*	Motor_Fader_1_Enable.set_PWM_status(false);
 	Motor_Fader_2_Enable.set_PWM_status(false);
 	Motor_Fader_3_Enable.set_PWM_status(false);
@@ -560,23 +607,3 @@ ISR(PORTA_INT1_vect) //Stopknopf Interrupt
 	sei();
 }
 
-void SchalteKranzAus()
-{
-	for (int i=0; i<6; i++)
-	{ 
-		LEDKranz[i].schalte_aus();
-	}
-	aktualisiere_alle_Gliederwerte();
-	Schubverband.Setze_Ist_auf_Soll();
-	Schubverband.Aktualisiere_Alle_Register();
-	Schubverband.Aktualisiere_ist_gleich_Soll(true);
-}
-
-void SchalteLEDAnKranzEin(uint8_t nummer)
-{
-	LEDKranz[nummer].schalte_ein();
-	aktualisiere_alle_Gliederwerte();
-	Schubverband.Setze_Ist_auf_Soll();
-	Schubverband.Aktualisiere_Alle_Register();
-	Schubverband.Aktualisiere_ist_gleich_Soll(true);
-}

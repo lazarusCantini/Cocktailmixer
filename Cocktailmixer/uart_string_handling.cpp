@@ -19,6 +19,7 @@
  extern int uart_getraenke_wert[6];
 extern char global_uart_string[UART_MAXSTRLEN + 1];
 extern char *Letzter_Status;
+extern volatile int Rezept_Array[6];
 /*
  int int_array_to_char(char *int_array, int laenge)
  {
@@ -101,7 +102,7 @@ extern char *Letzter_Status;
 
 int* Rezeptur_berechnen(void)
  {
-	char Prozentmenge[] = {'0','0','0','\n'};
+/*	char Prozentmenge[] = {'0','0','0','\n'};
 	char* ArrayZeiger = Prozentmenge;	
 	static int iProzentmengen[6];
 	int position_in_string = 8;
@@ -116,40 +117,17 @@ int* Rezeptur_berechnen(void)
 			iProzentmengen[i] = char_array_to_int(ArrayZeiger, 3);
 			position_in_string = position_in_string + 5;
 	}
-	/*				 char test[4];
-					 Send_UART("Zutat 1:");
-					 itoa(iProzentmengen[0], test, 10);
-					 Send_UART(test);
-					 Send_UART("Zutat 2:");
-					 itoa(iProzentmengen[1], test, 10);
-					 Send_UART(test);
-					 Send_UART("Zutat 3:");
-					 itoa(iProzentmengen[2], test, 10);
-					 Send_UART(test);
-					 Send_UART("Zutat 4:");
-					 itoa(iProzentmengen[3], test, 10);
-					 Send_UART(test);
-					 Send_UART("Zutat 5:");
-					 itoa(iProzentmengen[4], test, 10);
-					 Send_UART(test);
-					 Send_UART("Zutat 6:");
-					 itoa(iProzentmengen[5], test, 10);
-					 Send_UART(test);
 
-					 	int gesammt_Prozent = 0;
-					 	for (int i=0; i<6; i++)
-					 	{
-						 	gesammt_Prozent = gesammt_Prozent + iProzentmengen[i];
-					 	}
-					 	if (gesammt_Prozent == 100)
-					 	{
-						 	Send_UART("####DATA_OK++++");
-					 	}
-					 	else
-					 	{
-						 	Send_UART("####DATA_INVALID++++");
-					 	}
-*/
 	return iProzentmengen;
+	*/
+
+static int iProzentmengen[6];
+for (int i=0; i<6; i++)
+{
+	iProzentmengen[i] = Rezept_Array[i];
+}
+
+return iProzentmengen;
+
  }
 

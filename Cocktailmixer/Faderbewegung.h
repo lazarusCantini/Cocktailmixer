@@ -13,6 +13,7 @@
 #include "AnalogDigitalConverter.h"
 #include "Fader_Motor.h"
 #include "Schieberegister_Operationen.h"
+#include "UART.h"
 
 extern PwmPin Motor_Fader_Enable_Array[6];
 extern Schieberegister Schubverband;

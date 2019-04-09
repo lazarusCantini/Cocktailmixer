@@ -30,7 +30,7 @@ void IdleBildschirm()
 	lcd_setcursor(0,1);
 	lcd_string("WHS-Sring 006");
 	lcd_setcursor(0,2);
-	lcd_string("Bitte Start druecken");
+	lcd_string("Start druecken");
 }
 
 void Max_Fuellmaenge_beachten(unsigned int maxFuellmenge)
@@ -53,15 +53,15 @@ Bildschirmausgabe_Rezeptur_einlesen_2 immer wiederholt überschrieben. Der Rest b
 void Bildschirmausgabe_Rezeptur_einlesen_1()
 {
 	lcd_clear();
-	lcd_string("Gesammte Rezeptur");
+	lcd_string("Rezeptur in");
 	lcd_setcursor(0,2);
-	lcd_string("eingeben     mll");
+	lcd_string("Summe     mll");
 }
 
 
 void Bildschirmausgabe_Rezeptur_einlesen_2(unsigned int Menge)
 {
-	lcd_setcursor(8,2);
+	lcd_setcursor(9,2);
 	if (Menge < 100)
 	{
 		lcd_string(" ");

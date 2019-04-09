@@ -25,7 +25,7 @@ void Rezeptur_ausgeben(Pumpenklasse *Zeiger_auf_Pumpenarray)
 	{
 		if (Rezept_Array[i] > 0)
 		{
-			Debug_Pumpe_NrX_wird_angesprochen(i);
+			//Debug_Pumpe_NrX_wird_angesprochen(i);
 			Zeiger_auf_Pumpenarray[i].aktiviere_Pumpe();
 			LEDKranz[i].schalte_ein();
 									aktualisiere_alle_Gliederwerte();

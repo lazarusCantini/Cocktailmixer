@@ -20,7 +20,7 @@ BringMe2IdleState.d BringMe2IdleState.o: .././BringMe2IdleState.cpp \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\xmega.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
- .././AnalogDigitalConverter.h .././Fader_Motor.h
+ .././AnalogDigitalConverter.h .././Fader_Motor.h .././UART.h
 
 .././BringMe2IdleState.h:
 
@@ -79,3 +79,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././AnalogDigitalConverter.h:
 
 .././Fader_Motor.h:
+
+.././UART.h:

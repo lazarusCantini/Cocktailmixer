@@ -19,7 +19,7 @@ Potentiometer.d Potentiometer.o: .././Potentiometer.cpp \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  .././Bildschirmausgaben.h .././Faderbewegung.h .././PwmPin.h \
  .././Fader_Motor.h .././IC_74HC595.h .././Schieberegister_Operationen.h \
- .././Schieberegister.h .././LED.h
+ .././Schieberegister.h .././UART.h .././LED.h
 
 .././Potentiometer.h:
 
@@ -72,5 +72,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././Schieberegister_Operationen.h:
 
 .././Schieberegister.h:
+
+.././UART.h:
 
 .././LED.h:

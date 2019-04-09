@@ -17,6 +17,6 @@ void Int_init(void);
 
 void release_uart_string(void);
 void release_global_uart_string(void);
-
+char* int2char(int Zahl);
 
 #endif /* UART_H_ */
