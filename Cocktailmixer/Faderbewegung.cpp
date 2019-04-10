@@ -7,8 +7,8 @@
 
 #include "Faderbewegung.h"
 //debugging
-#include "Pin.h"
-Pin DebuggingPin('B', 3, false);
+//#include "Pin.h"
+//Pin DebuggingPin('B', 3, false);
 #include <stdlib.h>
 #define ObereBeschraenkung 240
 #define UntereBeschraenkung 15
@@ -196,14 +196,12 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 				}
 				else
 				{
-					DebuggingPin.setze_Status(true);
 					Motor_Fader_Enable_Array[i].set_Dutycycle(0.0);
 					aktualisiere_alle_Gliederwerte();
 					Schubverband.Setze_Ist_auf_Soll();
 					Schubverband.Aktualisiere_Alle_Register();
 					Schubverband.Aktualisiere_ist_gleich_Soll(true);
 					Drehrichtung[i] = Motor_Fader_Array[i].get_Drehsinn();
-					DebuggingPin.setze_Status(false);
 					//Motor_Fader_Enable_Array[i].set_Dutycycle(PWM);
 				}
 				Richtungsinitialisierung++;

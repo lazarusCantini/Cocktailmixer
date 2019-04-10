@@ -1644,30 +1644,30 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0xf1cd
+.debug_info     0x00000000     0xf1cc
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x22d1 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/XMEGAA_DFP/1.1.68/gcc/dev/atxmega32a4/avrxmega2/crtatxmega32a4.o
  .debug_info    0x000022d1      0xa85 AnalogDigitalConverter.o
  .debug_info    0x00002d56      0xa51 Bildschirmausgaben.o
  .debug_info    0x000037a7      0x769 Bitoperationen.o
- .debug_info    0x00003f10      0x944 BringMe2IdleState.o
- .debug_info    0x00004854     0x1012 Faderbewegung.o
- .debug_info    0x00005866      0x8a2 Fader_Motor.o
- .debug_info    0x00006108      0x4aa IC_74HC595.o
- .debug_info    0x000065b2      0x1df Init_XMEGA.o
- .debug_info    0x00006791      0x6eb lcd-routines.o
- .debug_info    0x00006e7c      0x53e LED.o
- .debug_info    0x000073ba     0x2123 main.o
- .debug_info    0x000094dd     0x12d5 Pin.o
- .debug_info    0x0000a7b2      0xa98 Potentiometer.o
- .debug_info    0x0000b24a      0x5bd Pumpenklasse.o
- .debug_info    0x0000b807      0xa53 Pumpensteuerung.o
- .debug_info    0x0000c25a     0x126b PwmPin.o
- .debug_info    0x0000d4c5      0xd1d Schieberegister.o
- .debug_info    0x0000e1e2      0x604 Schieberegister_Operationen.o
- .debug_info    0x0000e7e6      0x150 StringOperationen.o
- .debug_info    0x0000e936      0x706 UART.o
- .debug_info    0x0000f03c      0x191 uart_string_handling.o
+ .debug_info    0x00003f10      0x943 BringMe2IdleState.o
+ .debug_info    0x00004853     0x1012 Faderbewegung.o
+ .debug_info    0x00005865      0x8a2 Fader_Motor.o
+ .debug_info    0x00006107      0x4aa IC_74HC595.o
+ .debug_info    0x000065b1      0x1df Init_XMEGA.o
+ .debug_info    0x00006790      0x6eb lcd-routines.o
+ .debug_info    0x00006e7b      0x53e LED.o
+ .debug_info    0x000073b9     0x2123 main.o
+ .debug_info    0x000094dc     0x12d5 Pin.o
+ .debug_info    0x0000a7b1      0xa98 Potentiometer.o
+ .debug_info    0x0000b249      0x5bd Pumpenklasse.o
+ .debug_info    0x0000b806      0xa53 Pumpensteuerung.o
+ .debug_info    0x0000c259     0x126b PwmPin.o
+ .debug_info    0x0000d4c4      0xd1d Schieberegister.o
+ .debug_info    0x0000e1e1      0x604 Schieberegister_Operationen.o
+ .debug_info    0x0000e7e5      0x150 StringOperationen.o
+ .debug_info    0x0000e935      0x706 UART.o
+ .debug_info    0x0000f03b      0x191 uart_string_handling.o
 
 .debug_abbrev   0x00000000     0x48ec
  *(.debug_abbrev)

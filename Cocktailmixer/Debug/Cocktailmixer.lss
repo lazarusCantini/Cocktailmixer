@@ -15,11 +15,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000620  00000000  00000000  000049a4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000f1cd  00000000  00000000  00004fc4  2**0
+  6 .debug_info   0000f1cc  00000000  00000000  00004fc4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000048ec  00000000  00000000  00014191  2**0
+  7 .debug_abbrev 000048ec  00000000  00000000  00014190  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000437a  00000000  00000000  00018a7d  2**0
+  8 .debug_line   0000437a  00000000  00000000  00018a7c  2**0
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000eb0  00000000  00000000  0001cdf8  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -1127,8 +1127,8 @@ void bringMe2IdleState()
      7e2:	80 e2       	ldi	r24, 0x20	; 32
      7e4:	92 e2       	ldi	r25, 0x22	; 34
      7e6:	0e 94 96 16 	call	0x2d2c	; 0x2d2c <_Z23deaktiviere_PumpenarrayP12Pumpenklasse>
-	verfahre_alle_Fader_auf_gleichen_wert(35); //Original 15
-     7ea:	83 e2       	ldi	r24, 0x23	; 35
+	verfahre_alle_Fader_auf_gleichen_wert(15); //Original 15
+     7ea:	8f e0       	ldi	r24, 0x0F	; 15
      7ec:	0e 94 9c 06 	call	0xd38	; 0xd38 <_Z37verfahre_alle_Fader_auf_gleichen_werth>
 	IdleBildschirm();
      7f0:	0e 94 89 02 	call	0x512	; 0x512 <_Z14IdleBildschirmv>
@@ -1168,7 +1168,7 @@ void bringMe2IdleState()
      82e:	82 50       	subi	r24, 0x02	; 2
      830:	9e 4d       	sbci	r25, 0xDE	; 222
      832:	0e 94 cb 0b 	call	0x1796	; 0x1796 <_ZN3LED11schalte_ausEv>
-	verfahre_alle_Fader_auf_gleichen_wert(35); //Original 15
+	verfahre_alle_Fader_auf_gleichen_wert(15); //Original 15
 	IdleBildschirm();
 	
 	StartTasterLED.schalte_ein();
