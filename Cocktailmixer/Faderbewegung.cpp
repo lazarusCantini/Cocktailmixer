@@ -157,8 +157,6 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 	volatile uint8_t abweichung_array[6] = {0,0,0,0,0,0};
 	volatile bool Fader_Halt_erreicht[6] = {false, false, false, false, false, false};
 	volatile int i = 0;
-	const int Filterbreite = 1;
-	double Filterwert = 0.0;
 	int Richtungsinitialisierung = 0;
 	while (!(Fader_Halt_erreicht[0] && Fader_Halt_erreicht[1] && Fader_Halt_erreicht[2] && Fader_Halt_erreicht[3] && Fader_Halt_erreicht[4] && Fader_Halt_erreicht[5]) )
 	{
@@ -166,29 +164,20 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 		{
 			while(!Fader_Halt_erreicht[i])
 			{
-				/*
-					const int Filterbreite = 1;
-					double Filterwert = 0.0;
-				Filterwert = 0.0;
-				for (int i=0; i<Filterbreite; i++)
-				{
-					Filterwert = Filterwert + FaderADC_Array[i].getValue();
-				}
-				ist_array[i] = int(round(Filterwert/Filterbreite));*/
+
 				ist_array[i] = FaderADC_Array[i].getValue();
 				if (ist_array[i] < soll )
 				{
-					//Motor_Fader_Array[i].Enable_Motor();
 					abweichung_array[i] = soll - ist_array[i];
 					Motor_Fader_Array[i].setze_Drehrichtung(true);
 				}
+				
 				if (ist_array[i] > soll )
 				{
-					//Motor_Fader_Array[i].Enable_Motor();
 					abweichung_array[i] = ist_array[i] - soll;
 					Motor_Fader_Array[i].setze_Drehrichtung(false);
 				}
-				//Debug_Abweichung_ausgeben(abweichung);
+				
 				if (Drehrichtung[i] == Motor_Fader_Array[i].get_Drehsinn())
 				{
 					if (Richtungsinitialisierung < 1)
@@ -211,33 +200,19 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 				}
 				Richtungsinitialisierung++;
 				Motor_Fader_Array[i].Enable_Motor();
-				//if (ist_array[i] == soll)
+
 				if (abweichung_array[i] <= 1)
 				{
-				/*	if (abweichung_array[i] <= 1)
-					{*/
 						Motor_Fader_Array[i].Disable_Motor();
 						Fader_Halt_erreicht[i] = true;
-					/*} 
-					else
-					{
-						if (Motor_Fader_Enable_Array[i].get_Dutycycle()<50.0)
-						{
-							Motor_Fader_Enable_Array[i].set_Dutycycle(Motor_Fader_Enable_Array[i].get_Dutycycle()+0.1);
-						}
-						
-					}*/
-
-					//Debug_Halt_wurde_erreicht();
-					//weitermachen = false;
 				}
 				else
 				{
-					if (abweichung_array[i] <= 20)
+					if (abweichung_array[i] <= 30)
 					{
-						if (Motor_Fader_Enable_Array[i].get_Dutycycle() != 20.0)
+						if (Motor_Fader_Enable_Array[i].get_Dutycycle() != 30.0)
 						{
-							Motor_Fader_Enable_Array[i].set_Dutycycle(20.0);
+							Motor_Fader_Enable_Array[i].set_Dutycycle(30.0);
 						}
 						
 					} 
@@ -254,7 +229,6 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 			{
 				for (volatile int j=0; j<6; j++)
 				{
-					//if (soll == FaderADC_Array[j].getValue())
 					ist_array[j] = FaderADC_Array[j].getValue();
 					if ( ( ist_array[j]- soll) < 2)
 					{

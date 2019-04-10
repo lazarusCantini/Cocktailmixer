@@ -26,7 +26,7 @@ __attribute__((optimize(0)))
 void bringMe2IdleState()
 {
 	deaktiviere_Pumpenarray(Pumpenarray);
-	verfahre_alle_Fader_auf_gleichen_wert(15);
+	verfahre_alle_Fader_auf_gleichen_wert(125); //Original 15
 	IdleBildschirm();
 	
 	StartTasterLED.schalte_ein();
