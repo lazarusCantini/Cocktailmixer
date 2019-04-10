@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000620  00000000  00000000  000049a4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000f1ca  00000000  00000000  00004fc4  2**0
+  6 .debug_info   0000f1cd  00000000  00000000  00004fc4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000048ec  00000000  00000000  0001418e  2**0
+  7 .debug_abbrev 000048ec  00000000  00000000  00014191  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00004374  00000000  00000000  00018a7a  2**0
+  8 .debug_line   0000437a  00000000  00000000  00018a7d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000eb0  00000000  00000000  0001cdf0  2**2
+  9 .debug_frame  00000eb0  00000000  00000000  0001cdf8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000494c  00000000  00000000  0001dca0  2**0
+ 10 .debug_str    0000494c  00000000  00000000  0001dca8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000045c7  00000000  00000000  000225ec  2**0
+ 11 .debug_loc    000045c1  00000000  00000000  000225f4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000004d0  00000000  00000000  00026bb3  2**0
+ 12 .debug_ranges 000004d0  00000000  00000000  00026bb5  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -8756,14 +8756,20 @@ void Schieberegister::Reset_Shift_Register()
     3382:	80 ef       	ldi	r24, 0xF0	; 240
     3384:	92 e2       	ldi	r25, 0x22	; 34
     3386:	0e 94 12 12 	call	0x2424	; 0x2424 <_ZN3Pin12setze_StatusEb>
-    338a:	8f eb       	ldi	r24, 0xBF	; 191
-    338c:	9d e5       	ldi	r25, 0x5D	; 93
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+    338a:	8f e5       	ldi	r24, 0x5F	; 95
+    338c:	99 e0       	ldi	r25, 0x09	; 9
     338e:	01 97       	sbiw	r24, 0x01	; 1
     3390:	f1 f7       	brne	.-4      	; 0x338e <_ZN15Schieberegister20Reset_Shift_RegisterEv+0x22>
     3392:	00 c0       	rjmp	.+0      	; 0x3394 <_ZN15Schieberegister20Reset_Shift_RegisterEv+0x28>
     3394:	00 00       	nop
 	//Delay(x)
-	_delay_ms(wait_long);
+	_delay_us(wait_long);
 	//PinD5 = High
 	Shiftregister_Master_Reset.setze_Status(true);
     3396:	61 e0       	ldi	r22, 0x01	; 1
@@ -8807,29 +8813,29 @@ void Schieberegister::Schiebe_Datum_in_ShiftRegisterkette(uint8_t Datum)
     33c0:	88 ef       	ldi	r24, 0xF8	; 248
     33c2:	92 e2       	ldi	r25, 0x22	; 34
     33c4:	0e 94 12 12 	call	0x2424	; 0x2424 <_ZN3Pin12setze_StatusEb>
-    33c8:	8f e3       	ldi	r24, 0x3F	; 63
-    33ca:	9f e1       	ldi	r25, 0x1F	; 31
+    33c8:	8f e1       	ldi	r24, 0x1F	; 31
+    33ca:	93 e0       	ldi	r25, 0x03	; 3
     33cc:	01 97       	sbiw	r24, 0x01	; 1
     33ce:	f1 f7       	brne	.-4      	; 0x33cc <_ZN15Schieberegister35Schiebe_Datum_in_ShiftRegisterketteEh+0x1c>
     33d0:	00 c0       	rjmp	.+0      	; 0x33d2 <_ZN15Schieberegister35Schiebe_Datum_in_ShiftRegisterketteEh+0x22>
     33d2:	00 00       	nop
 	}
 	//Möglicherweie Delay
-	_delay_ms(wait_short);
+	_delay_us(wait_short);
 	//PinD4 = High
 	Shiftregister_Clock_Input.setze_Status(true);
     33d4:	61 e0       	ldi	r22, 0x01	; 1
     33d6:	84 ef       	ldi	r24, 0xF4	; 244
     33d8:	92 e2       	ldi	r25, 0x22	; 34
     33da:	0e 94 12 12 	call	0x2424	; 0x2424 <_ZN3Pin12setze_StatusEb>
-    33de:	8f eb       	ldi	r24, 0xBF	; 191
-    33e0:	9d e5       	ldi	r25, 0x5D	; 93
+    33de:	8f e5       	ldi	r24, 0x5F	; 95
+    33e0:	99 e0       	ldi	r25, 0x09	; 9
     33e2:	01 97       	sbiw	r24, 0x01	; 1
     33e4:	f1 f7       	brne	.-4      	; 0x33e2 <_ZN15Schieberegister35Schiebe_Datum_in_ShiftRegisterketteEh+0x32>
     33e6:	00 c0       	rjmp	.+0      	; 0x33e8 <_ZN15Schieberegister35Schiebe_Datum_in_ShiftRegisterketteEh+0x38>
     33e8:	00 00       	nop
 	//Delay
-	_delay_ms(wait_long);
+	_delay_us(wait_long);
 	//PinD4 = Low
 	Shiftregister_Clock_Input.setze_Status(false);
     33ea:	60 e0       	ldi	r22, 0x00	; 0
@@ -8858,14 +8864,14 @@ void Schieberegister::Aktualisiere_ist_gleich_Soll(bool Output_Active)
     3406:	8c ee       	ldi	r24, 0xEC	; 236
     3408:	92 e2       	ldi	r25, 0x22	; 34
     340a:	0e 94 12 12 	call	0x2424	; 0x2424 <_ZN3Pin12setze_StatusEb>
-    340e:	8f eb       	ldi	r24, 0xBF	; 191
-    3410:	9d e5       	ldi	r25, 0x5D	; 93
+    340e:	8f e5       	ldi	r24, 0x5F	; 95
+    3410:	99 e0       	ldi	r25, 0x09	; 9
     3412:	01 97       	sbiw	r24, 0x01	; 1
     3414:	f1 f7       	brne	.-4      	; 0x3412 <_ZN15Schieberegister28Aktualisiere_ist_gleich_SollEb+0x1c>
     3416:	00 c0       	rjmp	.+0      	; 0x3418 <_ZN15Schieberegister28Aktualisiere_ist_gleich_SollEb+0x22>
     3418:	00 00       	nop
 	//Delay
-	_delay_ms(wait_long);
+	_delay_us(wait_long);
 	//PinD7 = Low
 	Shiftregister_Storage_Register_Clock_Input.setze_Status(false);
     341a:	60 e0       	ldi	r22, 0x00	; 0

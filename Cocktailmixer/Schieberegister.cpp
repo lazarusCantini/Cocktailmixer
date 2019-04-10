@@ -2,8 +2,8 @@
 #define F_CPU 32000000UL				// CPU Takt
 #endif
 
-#define wait_long 3
-#define wait_short 1
+#define wait_long 300
+#define wait_short 100
 
 #include "Schieberegister.h"
 #include "Bitoperationen.h"
@@ -109,7 +109,7 @@ void Schieberegister::Reset_Shift_Register()
 	//PinD5 = Low Reset Line
 	Shiftregister_Master_Reset.setze_Status(false);
 	//Delay(x)
-	_delay_ms(wait_long);
+	_delay_us(wait_long);
 	//PinD5 = High
 	Shiftregister_Master_Reset.setze_Status(true);
 }
@@ -132,11 +132,11 @@ void Schieberegister::Schiebe_Datum_in_ShiftRegisterkette(uint8_t Datum)
 		Shiftregister_Data_Input.setze_Status(true);
 	}
 	//Möglicherweie Delay
-	_delay_ms(wait_short);
+	_delay_us(wait_short);
 	//PinD4 = High
 	Shiftregister_Clock_Input.setze_Status(true);
 	//Delay
-	_delay_ms(wait_long);
+	_delay_us(wait_long);
 	//PinD4 = Low
 	Shiftregister_Clock_Input.setze_Status(false);
 
@@ -149,7 +149,7 @@ void Schieberegister::Aktualisiere_ist_gleich_Soll(bool Output_Active)
 	//PinD7 = High
 	Shiftregister_Storage_Register_Clock_Input.setze_Status(true);
 	//Delay
-	_delay_ms(wait_long);
+	_delay_us(wait_long);
 	//PinD7 = Low
 	Shiftregister_Storage_Register_Clock_Input.setze_Status(false);
 	if(Output_Active)

@@ -1644,7 +1644,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0xf1ca
+.debug_info     0x00000000     0xf1cd
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x22d1 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/XMEGAA_DFP/1.1.68/gcc/dev/atxmega32a4/avrxmega2/crtatxmega32a4.o
  .debug_info    0x000022d1      0xa85 AnalogDigitalConverter.o
@@ -1663,11 +1663,11 @@ END GROUP
  .debug_info    0x0000b24a      0x5bd Pumpenklasse.o
  .debug_info    0x0000b807      0xa53 Pumpensteuerung.o
  .debug_info    0x0000c25a     0x126b PwmPin.o
- .debug_info    0x0000d4c5      0xd1a Schieberegister.o
- .debug_info    0x0000e1df      0x604 Schieberegister_Operationen.o
- .debug_info    0x0000e7e3      0x150 StringOperationen.o
- .debug_info    0x0000e933      0x706 UART.o
- .debug_info    0x0000f039      0x191 uart_string_handling.o
+ .debug_info    0x0000d4c5      0xd1d Schieberegister.o
+ .debug_info    0x0000e1e2      0x604 Schieberegister_Operationen.o
+ .debug_info    0x0000e7e6      0x150 StringOperationen.o
+ .debug_info    0x0000e936      0x706 UART.o
+ .debug_info    0x0000f03c      0x191 uart_string_handling.o
 
 .debug_abbrev   0x00000000     0x48ec
  *(.debug_abbrev)
@@ -1694,7 +1694,7 @@ END GROUP
  .debug_abbrev  0x00004603      0x1fc UART.o
  .debug_abbrev  0x000047ff       0xed uart_string_handling.o
 
-.debug_line     0x00000000     0x4374
+.debug_line     0x00000000     0x437a
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x2cb C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/XMEGAA_DFP/1.1.68/gcc/dev/atxmega32a4/avrxmega2/crtatxmega32a4.o
  .debug_line    0x000002cb      0x2c0 AnalogDigitalConverter.o
@@ -1713,11 +1713,11 @@ END GROUP
  .debug_line    0x00003189      0x228 Pumpenklasse.o
  .debug_line    0x000033b1      0x259 Pumpensteuerung.o
  .debug_line    0x0000360a      0x37f PwmPin.o
- .debug_line    0x00003989      0x346 Schieberegister.o
- .debug_line    0x00003ccf      0x135 Schieberegister_Operationen.o
- .debug_line    0x00003e04       0xdd StringOperationen.o
- .debug_line    0x00003ee1      0x372 UART.o
- .debug_line    0x00004253      0x121 uart_string_handling.o
+ .debug_line    0x00003989      0x34c Schieberegister.o
+ .debug_line    0x00003cd5      0x135 Schieberegister_Operationen.o
+ .debug_line    0x00003e0a       0xdd StringOperationen.o
+ .debug_line    0x00003ee7      0x372 UART.o
+ .debug_line    0x00004259      0x121 uart_string_handling.o
 
 .debug_frame    0x00000000      0xeb0
  *(.debug_frame)
@@ -1789,7 +1789,7 @@ END GROUP
  .debug_str     0x000048d4       0x78 uart_string_handling.o
                                 0x28f (size before relaxing)
 
-.debug_loc      0x00000000     0x45c7
+.debug_loc      0x00000000     0x45c1
  *(.debug_loc)
  .debug_loc     0x00000000      0x162 AnalogDigitalConverter.o
  .debug_loc     0x00000162      0x286 Bildschirmausgaben.o
@@ -1806,11 +1806,11 @@ END GROUP
  .debug_loc     0x00002fb9      0x1dd Pumpenklasse.o
  .debug_loc     0x00003196      0x20b Pumpensteuerung.o
  .debug_loc     0x000033a1      0x3ca PwmPin.o
- .debug_loc     0x0000376b      0x4f8 Schieberegister.o
- .debug_loc     0x00003c63       0x53 Schieberegister_Operationen.o
- .debug_loc     0x00003cb6      0x194 StringOperationen.o
- .debug_loc     0x00003e4a      0x5e0 UART.o
- .debug_loc     0x0000442a      0x19d uart_string_handling.o
+ .debug_loc     0x0000376b      0x4f2 Schieberegister.o
+ .debug_loc     0x00003c5d       0x53 Schieberegister_Operationen.o
+ .debug_loc     0x00003cb0      0x194 StringOperationen.o
+ .debug_loc     0x00003e44      0x5e0 UART.o
+ .debug_loc     0x00004424      0x19d uart_string_handling.o
 
 .debug_macinfo
  *(.debug_macinfo)
