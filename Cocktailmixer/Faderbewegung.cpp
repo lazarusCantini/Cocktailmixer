@@ -199,28 +199,33 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 					Drehrichtung[i] = Motor_Fader_Array[i].get_Drehsinn();
 				}
 				Richtungsinitialisierung++;
-				Motor_Fader_Array[i].Enable_Motor();
 
-				if (abweichung_array[i] <= 1)
+				if (abweichung_array[i] <= 1 | (i==3))
 				{
 						Motor_Fader_Array[i].Disable_Motor();
 						Fader_Halt_erreicht[i] = true;
+						if (i == 3)
+						{
+							double duty3 = Motor_Fader_Enable_Array[i].get_Dutycycle();
+						}
+						
 				}
 				else
 				{
-					if (abweichung_array[i] <= 30)
+					if (abweichung_array[i] <= 20)
 					{
-						if (Motor_Fader_Enable_Array[i].get_Dutycycle() != 30.0)
+						if (Motor_Fader_Enable_Array[i].get_Dutycycle() != 40.0)
 						{
-							Motor_Fader_Enable_Array[i].set_Dutycycle(30.0);
+							Motor_Fader_Enable_Array[i].set_Dutycycle(40.0);
 						}
 						
 					} 
 					else
 					{
-						Motor_Fader_Enable_Array[i].set_Dutycycle(double(abweichung_array[i])/2.35);
+						//Motor_Fader_Enable_Array[i].set_Dutycycle(double(abweichung_array[i])/2.35);
+						Motor_Fader_Enable_Array[i].set_Dutycycle(80.0);
 					}
-					
+					Motor_Fader_Array[i].Enable_Motor();
 				}
 			} // Ende while(!Fader_Halt_erreicht[i])
 			
