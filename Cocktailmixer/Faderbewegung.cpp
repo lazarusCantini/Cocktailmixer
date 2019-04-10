@@ -6,6 +6,9 @@
  */ 
 
 #include "Faderbewegung.h"
+//debugging
+#include "Pin.h"
+Pin DebuggingPin('B', 3, false);
 #include <stdlib.h>
 #define ObereBeschraenkung 240
 #define UntereBeschraenkung 15
@@ -153,6 +156,7 @@ void verfahre_Fader_auf_Wert(int *zeiger_auf_soll_array, PwmPin *Motor_Fader_Ena
 __attribute__((optimize(0)))
 void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 {
+	double PWM = 0.0;
 	volatile uint8_t ist_array[6];
 	volatile uint8_t abweichung_array[6] = {0,0,0,0,0,0};
 	volatile bool Fader_Halt_erreicht[6] = {false, false, false, false, false, false};
@@ -192,11 +196,15 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 				}
 				else
 				{
+					DebuggingPin.setze_Status(true);
+					Motor_Fader_Enable_Array[i].set_Dutycycle(0.0);
 					aktualisiere_alle_Gliederwerte();
 					Schubverband.Setze_Ist_auf_Soll();
 					Schubverband.Aktualisiere_Alle_Register();
 					Schubverband.Aktualisiere_ist_gleich_Soll(true);
 					Drehrichtung[i] = Motor_Fader_Array[i].get_Drehsinn();
+					DebuggingPin.setze_Status(false);
+					//Motor_Fader_Enable_Array[i].set_Dutycycle(PWM);
 				}
 				Richtungsinitialisierung++;
 
@@ -214,18 +222,30 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 				{
 					if (abweichung_array[i] <= 20)
 					{
-						if (Motor_Fader_Enable_Array[i].get_Dutycycle() != 40.0)
+						if (Motor_Fader_Enable_Array[i].get_Dutycycle() != 30.0)
 						{
-							Motor_Fader_Enable_Array[i].set_Dutycycle(40.0);
+							PWM = 30.0;
+							Motor_Fader_Enable_Array[i].set_Dutycycle(PWM);
 						}
-						
-					} 
+					}
+					else
+					if (abweichung_array[i] <= 30)
+					{
+					if (Motor_Fader_Enable_Array[i].get_Dutycycle() != 40.0)
+							{
+								PWM = 40.0;
+								Motor_Fader_Enable_Array[i].set_Dutycycle(PWM);
+							}
+						}
+					
 					else
 					{
 						//Motor_Fader_Enable_Array[i].set_Dutycycle(double(abweichung_array[i])/2.35);
-						Motor_Fader_Enable_Array[i].set_Dutycycle(80.0);
+						PWM = 80.0;
+						Motor_Fader_Enable_Array[i].set_Dutycycle(PWM);
 					}
 					Motor_Fader_Array[i].Enable_Motor();
+					Motor_Fader_Array[3].Disable_Motor();
 				}
 			} // Ende while(!Fader_Halt_erreicht[i])
 			
