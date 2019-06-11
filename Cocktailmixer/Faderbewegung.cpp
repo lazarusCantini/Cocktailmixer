@@ -238,7 +238,6 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 						Motor_Fader_Enable_Array[i].set_Dutycycle(PWM);
 					}
 					Motor_Fader_Array[i].Enable_Motor();
-					//Motor_Fader_Array[3].Disable_Motor(); Ich vermute mal das kann weg?
 				}
 			} // Ende while(!Fader_Halt_erreicht[i])
 			
