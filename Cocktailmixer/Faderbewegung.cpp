@@ -206,15 +206,10 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 				}
 				Richtungsinitialisierung++;
 
-				if (abweichung_array[i] <= 1 | (i==3))
+				if (abweichung_array[i] <= 1)
 				{
 						Motor_Fader_Array[i].Disable_Motor();
-						Fader_Halt_erreicht[i] = true;
-						if (i == 3)
-						{
-							double duty3 = Motor_Fader_Enable_Array[i].get_Dutycycle();
-						}
-						
+						Fader_Halt_erreicht[i] = true;		
 				}
 				else
 				{
@@ -243,7 +238,7 @@ void verfahre_alle_Fader_auf_gleichen_wert(uint8_t soll)
 						Motor_Fader_Enable_Array[i].set_Dutycycle(PWM);
 					}
 					Motor_Fader_Array[i].Enable_Motor();
-					Motor_Fader_Array[3].Disable_Motor();
+					//Motor_Fader_Array[3].Disable_Motor(); Ich vermute mal das kann weg?
 				}
 			} // Ende while(!Fader_Halt_erreicht[i])
 			
