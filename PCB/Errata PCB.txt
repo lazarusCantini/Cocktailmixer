@@ -3,7 +3,7 @@ Was geändert werden muss:
 01-Rückseite: Aura um Bohrlöcher an den Anschlüssen für die Pumpen
 02-Vorderseite: Alle Anschlüsse des U$1 (LM22671 DC/DC Wandler) sind kurzgeschlossen (Ist beim Rastern kurzgeschlossen worden)
 03-Vorderseite: Thermalpad Groundseite C18 Ausgangskondensator der 3,3V Schaltung
-
+04-Fiktives Problem gefunden
 
 
 
