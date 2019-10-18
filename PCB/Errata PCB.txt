@@ -1,0 +1,48 @@
+Version 2.1
+Was geändert werden muss:
+01-Rückseite: Aura um Bohrlöcher an den Anschlüssen für die Pumpen
+02-Vorderseite: Alle Anschlüsse des U$1 (LM22671 DC/DC Wandler) sind kurzgeschlossen (Ist beim Rastern kurzgeschlossen worden)
+03-Vorderseite: Thermalpad Groundseite C18 Ausgangskondensator der 3,3V Schaltung
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+15.2 Vorstellung an Präsidenten und Fototermin Trikon 13:00 Uhr Bocholt
+16.2 Offizielle Vorstellung des PRojektes
+
+Maschine V2 vom 10.1.18 - 22.1.18 an Bocholt ausleihen.
+9-6-8-N1
+ASCII COde
+
+
+0:1:050
+0:2:050
+0:3:000
+0:4:000
+0:5:000
+0:6:000
+1:100:1
