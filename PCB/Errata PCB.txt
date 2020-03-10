@@ -3,32 +3,14 @@ Was geändert werden muss:
 01-Rückseite: Aura um Bohrlöcher an den Anschlüssen für die Pumpen
 02-Vorderseite: Alle Anschlüsse des U$1 (LM22671 DC/DC Wandler) sind kurzgeschlossen (Ist beim Rastern kurzgeschlossen worden)
 03-Vorderseite: Thermalpad Groundseite C18 Ausgangskondensator der 3,3V Schaltung
-04-Fiktives Problem gefunden
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+04-Vorderseite: LD117A Anschlüssepins ändern
+05-Vorderseite: NCP51460 Drehen und Anschlüsse neu verbinden
+06-Rückseite: Potentiometer_Versorungen, IC zwischen Anschlusspins
+07-Vorderseite: IC12 (ADuM1402) Pin 2 auf GND // Statt Pin 8
+08-Vorderseite: MAX6520 ersetzen. 3k3 
+09-Rückseite: Kondensator nach Pot_1 Anschluss hinter den Widerstand
+10-Rückseote: IC11 (A2982SLW) hat 2 Pins mehr (No Connection). Gehäuse ändern
 
 
 15.2 Vorstellung an Präsidenten und Fototermin Trikon 13:00 Uhr Bocholt
@@ -46,3 +28,4 @@ ASCII COde
 0:5:000
 0:6:000
 1:100:1
+
